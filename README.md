@@ -62,3 +62,28 @@ Date,Amount,Category,Description
 02-21-2026,120.00,Shopping,Shoes
 
 The CSV file updates automatically when adding or deleting expenses.
+
+
+
+## Python Code Overview
+
+- **Database Operations (`expense_manager.py`)**
+  - `initialize_db()` → Creates the SQLite `expenses` table if it doesn't exist.
+  - `add_expense(date, amount, category, description='')` → Adds a new expense.
+  - `get_all_expenses()` → Retrieves all expenses ordered by date.
+  - `filter_expenses(start_date=None, end_date=None, category=None)` → Returns expenses filtered by date range and/or category.
+  - `summary_by_category()` → Returns total expenses grouped by category.
+  - `total_expenses()` → Returns total of all expenses.
+
+- **Graphical User Interface (`ui_main.py`)**
+  - `ExpenseTrackerUI` class provides the main PyQt5 window.
+  - Tabs:
+    1. **Add Expense** → Input fields for date, amount, category, description; validates and adds to DB.
+    2. **View Expenses** → Displays all expenses in a table.
+    3. **Filter Expenses** → Filters by date range and category.
+    4. **Summary** → Shows total per category and overall total.
+
+- **Application Entry (`main.py`)**
+  - Initializes the database.
+  - Launches the PyQt5 application.
+  - Creates and displays the main `ExpenseTrackerUI` window.
