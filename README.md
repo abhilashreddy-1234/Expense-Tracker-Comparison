@@ -1,89 +1,88 @@
-# Expense-Tracker-Comparison
-This project implements an Expense Tracker application in two different programming languages:
+# Expense App (Python + C++)
 
-Python
+This repository contains **two implementations of an expense tracker**:
+- A **Python desktop app** using **PyQt5** with **SQLite** persistence.
+- A **C++ desktop app** using the **Win32 API** with **CSV** persistence.
 
-C++
+The project is useful for comparing how the same problem domain (expense tracking) is handled across two different language ecosystems.
 
-Both implementations provide the same core functionality and are designed to demonstrate differences in syntax, structure, and language-specific features.
+## Repository layout
 
-Expense-Tracker-Comparison
-C++ Expense Tracker (Win32 GUI)
+```text
+Expense-App/
+├── Python-Expense-Tracker/
+│   ├── main.py
+│   ├── ui_main.py
+│   ├── expense_manager.py
+│   ├── init_db.py
+│   └── data/expenses.db
+├── CPP-Expense-Tracker/
+│   ├── final_expense_tracker_ui.cpp
+│   └── expenses.csv
+└── README.md
+```
 
-This project includes a C++ implementation of an Expense Tracker application built using the Win32 API.
+## What each app provides
 
-The application provides a graphical user interface to manage daily expenses and store them in a CSV file.
+Both apps support core expense-tracking tasks:
 
-Features
+- Adding expenses with date, amount, category, and description.
+- Viewing saved expenses.
+- Filtering expenses.
+- Showing totals.
 
-Add new expenses
+## Implementation differences at a glance
 
-Delete selected expenses
+| Area | Python app | C++ app |
+|------|------------|---------|
+| UI framework | PyQt5 | Win32 API |
+| Storage | SQLite database (`data/expenses.db`) | CSV file (`expenses.csv`) |
+| Primary file(s) | `ui_main.py`, `expense_manager.py` | `final_expense_tracker_ui.cpp` |
+| Runtime target | Cross-platform where PyQt5 is supported | Windows desktop |
 
-Save expenses to CSV file
+## Quick start
 
-Load expenses from CSV file
+### Python app
 
-Filter by category
+```bash
+cd Python-Expense-Tracker
+python3 init_db.py
+python3 main.py
+```
 
-Filter by date range (MM-DD-YYYY format)
+See app-specific documentation: `Python-Expense-Tracker/README.md`
 
-Automatically calculate and display total expenses
+### C++ app (Windows)
 
-Technologies Used
-
-C++
-
-Win32 API
-
-STL (vector, string, fstream, stringstream)
-
-MinGW g++ compiler
-
-How to Build
-
-Compile using:
-
+```bash
+cd CPP-Expense-Tracker
 g++ final_expense_tracker_ui.cpp -o ExpenseTracker.exe -mwindows
-
-Run:
-
 ExpenseTracker.exe
-CSV Format
+```
 
-Expenses are stored in:
+See app-specific documentation: `CPP-Expense-Tracker/README.md`
 
-expenses.csv
+## Running the C++ App on macOS (Wine)
 
-Format:
+The C++ expense tracker is built on the Win32 API, so it is designed for Windows and is not natively compatible with macOS.
 
-Date,Amount,Category,Description
-02-20-2026,25.50,Food,Lunch
-02-21-2026,120.00,Shopping,Shoes
+You can still run it on macOS by using **Wine**, which acts as a compatibility layer for Windows applications without requiring a full virtual machine.
 
-The CSV file updates automatically when adding or deleting expenses.
+**Install Wine (Homebrew)**
 
+```bash
+brew install --cask wine-stable
+```
 
+**Build the executable (if needed)**
 
-## Python Code Overview
+```bash
+cd CPP-Expense-Tracker
+g++ final_expense_tracker_ui.cpp -o ExpenseTracker.exe -mwindows
+```
 
-- **Database Operations (`expense_manager.py`)**
-  - `initialize_db()` → Creates the SQLite `expenses` table if it doesn't exist.
-  - `add_expense(date, amount, category, description='')` → Adds a new expense.
-  - `get_all_expenses()` → Retrieves all expenses ordered by date.
-  - `filter_expenses(start_date=None, end_date=None, category=None)` → Returns expenses filtered by date range and/or category.
-  - `summary_by_category()` → Returns total expenses grouped by category.
-  - `total_expenses()` → Returns total of all expenses.
+**Run with Wine**
 
-- **Graphical User Interface (`ui_main.py`)**
-  - `ExpenseTrackerUI` class provides the main PyQt5 window.
-  - Tabs:
-    1. **Add Expense** → Input fields for date, amount, category, description; validates and adds to DB.
-    2. **View Expenses** → Displays all expenses in a table.
-    3. **Filter Expenses** → Filters by date range and category.
-    4. **Summary** → Shows total per category and overall total.
-
-- **Application Entry (`main.py`)**
-  - Initializes the database.
-  - Launches the PyQt5 application.
-  - Creates and displays the main `ExpenseTrackerUI` window.
+```bash
+wine ExpenseTracker.exe
+```
