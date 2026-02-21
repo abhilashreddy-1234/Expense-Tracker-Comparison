@@ -8,6 +8,7 @@
 
 2. Install dependencies:
    pip install -r requirements.txt
+   pip install PyQt5
 
-3. Run the application:
+4. Run the application:
    python main.py
